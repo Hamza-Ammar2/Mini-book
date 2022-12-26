@@ -1,0 +1,74 @@
+extends layout
+
+block content 
+    div(class="d-flex flex-column" style="width: 100vw; height: 100vh;")
+        nav(class="navbar navbar-expand-lg bg-light mb-3" style="width: 100vw;")
+            div(class="container-fluid")
+                a(class="navbar-brand" href="/")
+                    h2 Home
+                div(class="collapse navbar-collapse")
+                div(class="navbar-nav")
+                    a(class="nav-link active" href="/users/" + person._id + "/about") About 
+                    a(class="nav-link active" href="/users/" + person._id) Timeline
+                    a(class="nav-link active" href="/users/" + person._id + "/friends") Friends
+                    form(action="/log-out" method='POST' class="d-flex flex-row")
+                        button(type="submit" class="btn btn-primary") Log out 
+        div(class="d-flex flex-row mb-3")
+            div(class="d-flex flex-row" style="align-items: center; gap: 30px; margin-left: 20px;")
+                div(class="d-flex flex-column" style="align-items: center;")
+                    img(class="profile" src= person.pic ? person.pic : "/images/person.png" style="width: 10rem; height: 10rem;")
+                    if person.username === user.username
+                        - var changePhoto = person.pic ? "Change profile photo" : "Add profile photo"
+                        button(id="profile" class="btn btn-primary")= changePhoto
+                h1= person.username
+            div(style="width: 100%;")
+            if user.username !== person.username 
+                if user.friends.indexOf(person._id) === -1 && user.sentRequests.indexOf(person._id) === -1
+                    form(class="d-flex flex-row" style="align-items: center; margin-right: 20px" action="/users/" + person._id + "/send-request" method='POST')
+                        button(class="btn btn-primary") Send friend request
+                else if user.friends.indexOf(person._id) === -1
+                    form(class="d-flex flex-row" style="align-items: center; margin-right: 20px" action="/users/" + person._id + "/remove-request" method='POST')
+                        button(class="btn btn-primary") Remove friend Request 
+                else
+                    form(class="d-flex flex-row" style="align-items: center; margin-right: 20px" action="/users/" + person._id + "/unfriend" method='POST') 
+                        button(class="btn btn-primary") Unfriend 
+        hr
+        div(class="container-xxl d-flex flex-column" style="align-items: center;")
+            if person.username !== user.username 
+                if person.bio 
+                    h3= person.bio 
+            else 
+                form(action="/users/" + person._id + "/edit-bio" method='POST' class="container-fluid card card-body mb-3" style="width: 40rem; margin-top: 20px;")
+                    div(class="mb-3")
+                        label(class="form-label" for="workplace") Edit bio
+                        input(name="bio" style="resize: none;" class="form-control" rows="5" id="post" placeholder= person.bio ? person.bio : "add bio" required)
+                    button(type="submit" class="btn btn-primary") Submit
+            if posts.length === 0
+                h3 No posts nor friends
+            for post in posts.reverse()
+                div(class="card mb-3" style="width: 40rem;")
+                    div(class="card-body" id=post._id)
+                        div(class="mb-3 d-flex flex-row" style="align-items: center; gap: 10px")
+                            img(src=post.user.pic ? post.user.pic : "/images/person.png" class="profile" style="height: 4rem; width: 4rem;")
+                            a(href="/users/" + post.user._id)
+                                h5(class="card-title")= post.user.username 
+                        p(class="card-text")= post.text 
+                        if post.pic !== ""
+                            img(src=post.pic style="width: 100%; height: auto;" class="rounded")
+                        
+                        hr
+                        div(class="mb-3 d-flex flex-row comments" style="justify-content: center; gap: 20px;" data-comments=JSON.stringify(post.comments))
+                            p= post.comments.length + " comments"
+                            p= post.likes + " likes"
+                            
+                            - var addremove = user.likedPosts.indexOf(post._id) !== -1 ? "/remove-like" : "/add-like";
+                            - var like = user.likedPosts.indexOf(post._id) !== -1 ? "Unlike" : "Like";
+                            form(action="/" + post._id + addremove method='POST')
+                                button(class="btn btn-primary" type="submit")= like
+                            button(class="btn btn-primary btns") view comments
+    script(src="/javascripts/comments.js")
+    if user.username === person.username 
+        script(src="/javascripts/uploadProf.js")
+
+
+            

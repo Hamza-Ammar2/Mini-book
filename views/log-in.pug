@@ -1,0 +1,22 @@
+extends layout 
+
+block content
+    div(class="d-flex flex-row" style="justify-content: center; align-items: center;")
+        div(class="card-body card" style="width: 40rem; margin-right: 30px")
+            form(action="/log-in" class="container-fluid needs-validation" method='POST')
+                div(class="mb-3")
+                    label(for="username" class="form-label") Username
+                    input(name="username" type="text" minlength="3" maxlength="30" class="form-control" id="username" aria-describedby="username" required)
+                    if message === "Incorrect username"
+                        p(style="color: red;")= message
+
+                div(class="mb-3")
+                    label(for="password" class="form-label") Password 
+                    input(name="password" type="password" minlength="2" maxlength="30" class="form-control" id ="username" aria-describedby="password" required)
+                    if message === "Incorrect password"
+                        p(style="text-color: red;")= message
+
+                button(type="submit" class="btn btn-primary") Submit
+                hr
+                a(href="/sign-up") Don't have an account? Sign up here!
+        img(src="/images/log-in.jpg" class="rounded")

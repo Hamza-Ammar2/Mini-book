@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  div(class="d-flex flex-column" style="width: 100vw; height: 100vh")
+    nav(class="navbar navbar-expand-lg bg-light mb-3" style="width: 100vw; position: sticky;")
+      div(class="container-fluid")
+        a(class="navbar-brand")
+          h2 Minibook
+        div(class="collapse navbar-collapse")
+        div(class="navbar-nav")
+          a(class="nav-link active" href="/") Home 
+          a(class="nav-link active" href="/users/" + user._id) Timeline
+          a(class="nav-link active" href="/users") Find people
+          form(action="/log-out" method='POST' class="d-flex flex-row")
+            button(type="submit" class="btn btn-primary") Log out 
+    div(class="container-xxl d-flex flex-row" style="align-items: center; gap: 30px;")
+      div(class="d-flex flex-column rounded" style="width: 100%; height: 100%; position: sticky;")
+        h4(style="border-top: 1px solid black; border-bottom: 1px solid black; text-align: center;") Friend Requests
+        if user.receivedRequests.length === 0
+          p(class="mt-2" style="margin: 0 auto;") No new friend requests
+        for person in user.receivedRequests 
+          div(class="d-flex flex-row pb-2 pt-2 mb-3" style="width: 100%; gap: 5px; align-items: center;")
+            img(src= person.pic ? person.pic : "/images/person.png" class="profile" style="margin-left: 5px; width: 3rem; height: 3rem;")
+            a(href="/users/" + person._id class="card-title")= person.username
+            div(style="flex: 1;")
+            form(action="/users/" + person._id + "/add-friend" method='POST' style="margin-right: 5px")
+              button(type="submit" class="btn btn-primary") add friend 
+          div(style="width: 100%; border-bottom: 1px solid black;")
+            
+
+
+      div(class="d-flex flex-column" style="align-items: center;")
+        form(id="postForm" action="/exp" method='POST' class="container-fluid card card-body mb-3" style="width: 40rem; margin-top: 20px;")
+          div(class="mb-3")
+            label(class="form-label" for="post") Add a post
+            input(id="upload" name="pic" class="form-control mb-3" type="file")
+            img(id="display" class="rounded mb-3" style="width: 100%; height: auto; display: none;")
+            textarea(name="text" style="resize: none;" class="form-control" rows="5" id="post" placeholder="What's on your mind?" required)
+          button(type="submit" class="btn btn-primary" id="submitPost") Add Post
+        for post in posts.reverse()
+          div(class="card mb-3" style="width: 40rem;")
+            div(class="card-body" id=post._id)
+              div(class="mb-3 d-flex flex-row" style="align-items: center; gap: 10px")
+                img(src=post.user.pic ? post.user.pic : "/images/person.png" class="profile" style="height: 4rem; width: 4rem;")
+                a(href="/users/" + post.user._id)
+                  h5(class="card-title")= post.user.username 
+              p(class="card-text")= post.text
+              if post.pic !== ""
+                img(src=post.pic style="width: 100%; height: auto;" class="rounded")
+               
+              hr
+              div(class="mb-3 d-flex flex-row comments" style="align-items: center; justify-content: center; gap: 20px;" data-comments=JSON.stringify(post.comments))
+                p= post.comments.length + " comments"
+                p= post.likes + " likes"
+                
+                - var addremove = user.likedPosts.indexOf(post._id) !== -1 ? "/remove-like" : "/add-like";
+                - var like = user.likedPosts.indexOf(post._id) !== -1 ? "Unlike" : "Like";
+                form(action="/" + post._id + addremove method='POST')
+                  button(class="btn btn-primary" type="submit")= like
+                button(class="btn btn-primary btns") view comments
+      div(class="d-flex flex-column rounded" style="width: 100%; height: 100%; position: sticky;")
+        h4(style="border-top: 1px solid black; border-bottom: 1px solid black; text-align: center;") Friends
+        if user.friends.length === 0
+          p(class="mt-2" style="margin: 0 auto;") No friends
+        for person in user.friends 
+          div(class="d-flex flex-row pb-2 pt-2 mb-3" style="width: 100%; gap: 5px; align-items: center;")
+            img(src= person.pic ? person.pic : "/images/person.png" class="profile" style="margin-left: 5px; width: 3rem; height: 3rem;")
+            a(href="/users/" + person._id class="card-title")= person.username
+          div(style="width: 100%; border-bottom: 1px solid black;")
+
+  script(src="/javascripts/comments.js")
+  script(src="/javascripts/upload.js")
+
+

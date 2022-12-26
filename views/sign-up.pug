@@ -1,0 +1,19 @@
+extends layout 
+
+block content 
+    div(class="d-flex flex-row" style="justify-content: center; align-items: center;")
+        img(src="/images/sign-up.jpg" class="rounded")
+
+        div(class="card card-body" style="width: 40rem; margin-left: 30px;")
+            form(action="/sign-up" method='POST')
+                div(class="mb-3")
+                    label(for="username" class="form-label") Username
+                    input(name="username" type="text" minlength ="3" maxlength="30" class="form-control" id="username" aria-describedby="username" required)
+                    if message !== ""
+                        p(style="color: red;")= message
+                div(class="mb-3")
+                    label(for="password" class="form-label") Password 
+                    input(name="password" type="password" minlength="1" maxlength="30" class="form-control" id ="username" aria-describedby="password" required)
+                button(type="submit" class="btn btn-primary") Submit
+                hr
+                a(href="/log-in") Already have an account? Log in here!
