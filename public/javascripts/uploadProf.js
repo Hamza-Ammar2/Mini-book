@@ -5,9 +5,12 @@ let img = "";
 
 btn.addEventListener('click', () => {
     body.innerHTML += `
-        <form class="rounded picy" onsubmit="submit">
-            <label>Choose your Profile Picture</label>
-            <img class="rounded" id="display" style="width: 100%; height: auto; display: none;">
+        <form class="rounded picy d-flex flex-column" onsubmit="submit" style="border: 1px solid black; min-height: 20rem; background-color: white; align-items: center;">
+            <h5>Choose your Profile Picture</h5>
+            <hr></hr>
+            <div class="d-flex flex-column" style="flex: 1; align-items: center; justify-content: center;">
+                <img class="profile" id="display" style="width: 10rem; height: 10rem; display: none;">
+            </div>
             <input id="upload" name="pic" class="form-control mb-3" type="file">
             <button class="btn btn-primary">Add Profile Picture</button>
         </form>
@@ -15,7 +18,6 @@ btn.addEventListener('click', () => {
 
     document.getElementById("upload").addEventListener("change", function(e) {
         const reader = new FileReader();
-        console.log("shit");
         reader.addEventListener("load", () => {
             img = reader.result;
             document.getElementById("display").style.display = "block";
@@ -33,7 +35,7 @@ btn.addEventListener('click', () => {
             method: 'POST',
             headers: {accept: 'application.json', 'content-type': 'application/json'},
             body: JSON.stringify({
-                pic: img
+                pic: document.getElementById("display").getAttribute("src")
             })
         }, () => location.reload());
     };

@@ -6,7 +6,7 @@ var async = require('async');
 
 exports.editPic = (req, res, next) => {
     if (!req.user) {return res.redirect('/log-in');}
-    User.findById(req.user._id, {pic: req.body.pic}).exec((err, result) => {
+    User.findByIdAndUpdate(req.user._id, {pic: req.body.pic}).exec((err, result) => {
         if (err) {return next(err);}
 
         res.redirect(req.get('referer'));
