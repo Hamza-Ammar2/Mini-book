@@ -1,6 +1,7 @@
 var Post = require('../models/posts');
 var User = require('../models/users');
 var Comment = require('../models/comments');
+var Reply = require('../models/replies');
 var async = require('async');
 
 
@@ -58,23 +59,20 @@ exports.timeline = (req, res, next) => {
     if (!req.user) return res.redirect('/log-in');
     async.parallel({
         user(callback) {
-            User.findById(req.user._id).populate('receivedRequests').populate('sentRequests').populate('friends').exec(callback);
+            User.findById(req.user._id)
+                .populate('receivedRequests')
+                .populate('sentRequests')
+                .populate('friends').exec(callback);
         },
         posts(callback) {
-            Post.find().populate('user').populate({path: 'comments', populate: {
-                path: 'user'
-            }}).sort([['date', -1]]).exec(callback);
+            Post.find().populate('user')
+                .populate({path: 'comments', populate: {path: 'user',}})
+                .populate({path: 'comments', populate: {path: 'replies', populate: {path: 'user'}}})
+                .populate({path: 'comments', populate: {path: 'replies', populate: {path: 'replyingTo'}}})
+                .sort([['date', -1]]).exec(callback);
         }
     }, (err, result) => {
         if (err) {return next(err);}
         res.render("index", {title: "Timeline", posts: result.posts, user: result.user});
-    });
-};
-
-
-exports.userTimeline = (req, res, next) => {
-    User.findById(req.params._id).populate('posts').populate('friends').exec((err, result) => {
-        if (err) {return next(err);}
-        res.render()
     });
 };

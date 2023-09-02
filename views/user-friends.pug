@@ -1,0 +1,12 @@
+extends user-layout 
+
+block content
+    link(rel='stylesheet' href='/stylesheets/user-friends.css')
+    main(style=`grid-template-rows: repeat(${Math.ceil(person.friends.length/2)}, 100px);`) 
+        for friend in person.friends 
+            div 
+                img(src=`${friend.pic ? friend.pic : '/images/person.png'}` class='user-pic')
+                a(href=`/users/${friend._id}`)    
+                    h4= friend.username 
+        if person.friends.length === 0
+            p No available friends.

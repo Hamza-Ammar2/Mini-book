@@ -1,30 +1,33 @@
-extends layout 
+extends index-layout 
 
 block content
-    div(class="d-flex flex-column" style="width: 100vw; height: 100vh")
-        nav(class="navbar navbar-expand-lg bg-light mb-3")
-            div(class="container-fluid")
-                a(class="navbar-brand") Home 
-                div(class="collapse navbar-collapse")
-                div(class="navbar-nav")
-                    a(class="nav-link active" href="/") Home 
-                    a(class="nav-link active" href="/users/" + user._id) Timeline
-                    a(class="nav-link active") Find people
-                    form(action="/log-out" method='POST' class="d-flex flex-row")
-                        button(type="submit" class="btn btn-primary") Log out
-        div(class="d-flex flex-column" style="align-items: center")    
-            for User in users 
-                div(class="card d-flex flex-row pb-2 pt-2 mb-3" style="width: 40rem; gap: 5px; align-items: center;")
-                    img(src= User.pic ? User.pic : "/images/person.png" class="profile" style="margin-left: 5px; width: 3rem; height: 3rem;")
-                    a(href="/users/" + User._id class="card-title")= User.username
-                    div(style="width: 100%;")
-                    if User.username !== user.username 
-                        if user.friends.indexOf(User._id) === -1 && user.sentRequests.indexOf(User._id) === -1
-                            form(action="/users/" + User._id + "/send-request" method='POST' style="margin-right: 5px")
-                                button(class="btn btn-primary") Send friend request
-                        else if user.friends.indexOf(User._id) === -1
-                            form(action="/users/" + User._id + "/remove-request" method='POST' style="margin-right: 5px")
-                                button(class="btn btn-primary") Remove friend Request 
-                        else
-                            form(action="/users/" + User._id + "/unfriend" style="margin-right: 5px") 
-                                button(class="btn btn-primary") Unfriend 
+    div(class="exp")
+    link(rel='stylesheet' href='/stylesheets/all-users.css')
+    link(rel='stylesheet' href='/stylesheets/all-users-responsive.css')
+    div(class='cont-wrap')
+        div(class='cont')
+            for u in users 
+                if u._id.toString() !== user._id.toString()
+                    div(class='card')
+                        div(class='u-img' style=`background-image: url(${u.pic ? u.pic : '/images/person.png'})`)
+                        div(class='u-opts')
+                            p 
+                                a(href=`/users/${u._id}`)= u.username
+                            if user.friends.indexOf(u._id) !== -1
+                                form(action=`/users/${u_id}/unfriend` method='POST')
+                                    button(class="btn neg" type="submit") Unfriend 
+                                button(class="btn neg") Remove
+                            else if user.receivedRequests.indexOf(u._id) !== -1
+                                form(action=`/users/${u._id}/add-friend` method='POST')
+                                    button(class="btn" type="submit") Add Friend
+                                form(action=`/users/${u._id}/reject-friend` method='POST')
+                                    button(class="btn neg" type="submit") Reject Friend
+                            else if user.sentRequests.indexOf(u._id) !== -1
+                                form(action=`/users/${u._id}/remove-request` method='POST')
+                                    button(class="btn neg" type="submit") Remove Request
+                                button(class="btn neg") Remove
+                            else 
+                                form(action=`/users/${u._id}/send-request` method='POST')
+                                    button(class="btn" type="submit") Send Request
+                                button(class="btn neg") Remove
+    

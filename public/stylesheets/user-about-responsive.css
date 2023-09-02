@@ -1,0 +1,17 @@
+@media (width <= 1200px) {
+    main {
+        width: 80vw;
+    }
+    .header {
+        width: 80vw;
+    }
+}
+
+@media (width <= 600px) {
+    main {
+        width: 90vw;
+    }
+    .header {
+        width: 90vw;
+    }
+}

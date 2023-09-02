@@ -6,6 +6,7 @@ var commentSchema = new Schema({
     post: {type: Schema.Types.ObjectId, ref: 'Post'},
     text: {type: String},
     likes: {type: Number},
+    replies: [{type: Schema.Types.ObjectId, ref: 'Reply'}],
     date: Date
 });
 

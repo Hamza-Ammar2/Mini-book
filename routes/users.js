@@ -9,6 +9,7 @@ router.get('/:id', User.userTimeline);
 router.get('/:id/friends', User.userFriends);
 router.post('/:id/send-request', User.sendRequest);
 router.post('/:id/remove-request', User.removeRequest);
+router.post('/:id/reject-friend', User.rejectFriend);
 router.post('/:id/unfriend', User.unfriend);
 router.post('/:id/add-friend', User.addFriend);
 router.get('/:id/about', User.about);

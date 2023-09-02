@@ -21,6 +21,7 @@ router.get('/sign-up', (req, res, next) => {
 
 router.post('/post', Post.addPost);
 router.post('/:id/comment', Comment.addComment);
+router.post('/:id/reply', Comment.addReply);
 
 router.post('/log-out', (req, res, next) => {
   req.logOut((err) => {
@@ -33,5 +34,11 @@ router.post('/log-out', (req, res, next) => {
 
 router.post('/:id/add-like', Post.addLike);
 router.post('/:id/remove-like', Post.removeLike);
+
+router.post('/:id/add-like-comment', Comment.addLike);
+router.post('/:id/remove-like-comment', Comment.removeLike);
+
+router.post('/:id/add-like-reply', Comment.addLikeReply);
+router.post('/:id/remove-like-reply', Comment.removeLikeReply);
 
 module.exports = router;

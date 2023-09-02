@@ -1,0 +1,63 @@
+.cont-wrap {
+    margin-top: 10px;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: center;
+}
+
+.cont {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(4, min-content);
+}
+
+.card {
+    width: 200px;
+    height: 350px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.u-img {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex: 2;
+}
+
+.u-opts * {
+    padding: 0;
+    margin: 0;
+}
+
+.u-opts p {
+    font-size: 1.2rem;
+}
+
+.u-opts {
+    padding: 10px;
+    flex: 1;
+}
+
+.btn {
+    margin-top: 10px;
+    background-color: blue;
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    padding: 5px;
+}
+
+.neg {
+    color: black;
+    background-color: lightgray;
+}
+
+.btn:hover {
+    cursor: pointer;
+}

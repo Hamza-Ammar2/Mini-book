@@ -1,0 +1,31 @@
+@media (width <= 1200px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 80vw;
+    }
+    .header {
+        width: 80vw;
+    }
+
+    .post-cont, .add-post-cont {
+        width: calc(80vw - 20px);
+    }
+}
+
+@media (width <= 600px) {
+    .friends-body {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    main {
+        width: 90vw;
+    }
+    .header {
+        width: 90vw;
+    }
+
+    .post-cont, .add-post-cont {
+        width: calc(90vw - 20px);
+    }
+}

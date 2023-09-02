@@ -1,0 +1,38 @@
+extends user-layout 
+
+block content
+    link(rel='stylesheet' href='/stylesheets/user-about.css')
+    link(rel='stylesheet' href='/stylesheets/user-about-responsive.css')
+    main 
+        h3 Bio 
+        div
+            p= person.bio ? person.bio : 'No available bio.'
+            if person._id.toString() === user._id.toString()
+                button(id='edit-bio' class='init-edit') Edit Bio
+                form(class='edit-form')
+                    textarea(name='bio' rows='4' placeholder='Add bio..')
+                    button Save 
+
+        hr
+
+        h3 Workplace 
+        div
+            p= person.workplace ? person.workplace : 'No available workplace.'
+            if person._id.toString() === user._id.toString()
+                button(id='edit-workplace' class='init-edit') Edit workplace 
+                form(class='edit-form')
+                    textarea(name='workplace' rows='4' placeholder='Add workplace..')
+                    button Save
+    
+        hr
+
+        h3 Residence
+        div
+            p= person.residence ? person.residence : 'No available home.'
+            if person._id.toString() === user._id.toString()
+                button(id='edit-residence' class='init-edit') Edit Residence
+                form(class='edit-form')
+                    textarea(name="residence" rows='4' placeholder='Add residence..')
+                    button Save
+    
+    script(src='/javascripts/edit-about.js')

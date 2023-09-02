@@ -8,6 +8,8 @@ var userSchema = new Schema({
     sentRequests: [{type: Schema.Types.ObjectId, ref: 'User'}],
     receivedRequests: [{type: Schema.Types.ObjectId, ref: 'User'}],
     likedPosts: [{type: Schema.Types.ObjectId, ref: 'Post'}],
+    likedComments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+    likedReplies: [{type: Schema.Types.ObjectId, ref: 'Reply'}],
     pic: {type: String},
     workplace: {type: String},
     residence: {type: String},

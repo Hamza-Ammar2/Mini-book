@@ -1,6 +1,37 @@
-extends index-layout
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel='stylesheet' href='/stylesheets/comments.css')
+    link(rel="stylesheet" href="/stylesheets/index-responsive.css")
+  body
+    header
+      div(class='nav-start') 
+        img(class='logo' src='/images/logo.png')
+        div(class="search-cont")
+          img(class='srch-icon' src='/images/search-icon.svg')
+          input(type='text' name='users' placeholder='Search Facebook')
 
-block content
+      ul 
+        li(class='in') 
+          a(href='/')
+            img(class='home-icon' src='/images/home-icon.png')
+        li 
+          a(href='/users')
+            img(class='friends-icon' src='/images/friends-icon.png')
+        li 
+          img(class="watch-icon" src='/images/watch-icon.png')
+        li 
+          img(class="games-icon" src='/images/game-icon.png')
+      
+      div(class='nav-end')   
+        div(class='img-cont')
+          img(class="messenger-icon" src="/images/messenger-icon.webp")
+        a(href=`/users/${user._id}` class='img-cont user-cont')
+          img(class="user-pic" src=`${user.pic ? user.pic : '/images/person.png'}`)
+
+
     div(class="left")
       div
         img(class='user-pic' src=`${user.pic ? user.pic : '/images/person.png'}`)
@@ -60,6 +91,7 @@ block content
                   p= post.date 
                   button(class='close')
                     img(src='/images/x-icon.svg')
+                    
                 p(class='content')= post.text
                 if post.pic 
                   img(class='post-pic' src=post.pic)
@@ -142,5 +174,5 @@ block content
       if user.friends.length === 0
         p No available contacts.
 
-    script(src='/javascripts/comments.js')
-    script(src='/javascripts/upload.js')
+  script(src='/javascripts/comments.js')
+  script(src='/javascripts/upload.js')

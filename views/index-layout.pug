@@ -1,0 +1,69 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel="stylesheet" href='/stylesheets/comments.css')
+    link(rel="stylesheet", href="/stylesheets/index-responsive.css")
+  body
+    header 
+      div(class='nav-start') 
+        img(class='logo' src='/images/logo.png')
+        div(class="search-cont")
+          img(class='srch-icon' src='/images/search-icon.svg')
+          input(type='text' name='users' placeholder='Search Facebook')
+
+      div(class="ul-cont")
+        ul 
+          li(class='in')
+            a(href='/')
+              img(class='home-icon' src='/images/home-icon.png')
+          li
+            a(href='/users')
+              img(class='friends-icon' src='/images/friends-icon.png')
+          li
+            img(class="watch-icon" src='/images/watch-icon.png')
+          li 
+            img(class="games-icon" src='/images/game-icon.png')
+        div(class="req-cont")
+          if user.receivedRequests.length > 0
+            p Friend Requests 
+            hr
+            for friend in user.receivedRequests
+              div   
+                img(class='user-pic' src=`${friend.pic ? friend.pic : '/images/person.png'}`)
+                a(href=`/users/${friend._id}`)  
+                  p= friend.username
+                div(style="flex: 1;")
+                div
+                  form(action=`/users/${friend._id}/add-friend` method='POST')
+                    button(type="submit" class="btn") Add Friend 
+                  form(action=`/users/${friend._id}/reject-friend` method='POST')
+                    button(type="submit" class="btn neg") Reject Request 
+      
+      
+      div(class='nav-end') 
+        div(class="swit" style="display: none;")
+          div 
+          div 
+          div
+        div(class='img-cont')
+          img(class="messenger-icon" src="/images/messenger-icon.webp")
+        a(href=`/users/${user._id}` class='img-cont user-cont')
+          img(class="user-pic" src=`${user.pic ? user.pic : '/images/person.png'}`)
+      
+      
+      script.
+        const swit = document.querySelector(".swit");
+        const ulcont = document.querySelector(".ul-cont");
+        swit.addEventListener('click', (e) => {
+          
+          if (ulcont.classList.contains('appear')) {
+            ulcont.classList.remove('appear');
+            ulcont.classList.add('disappear');
+          } else {
+            ulcont.classList.remove('disappear');
+            ulcont.classList.add('appear');
+          }
+        });
+    block content 

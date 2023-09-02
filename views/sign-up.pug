@@ -1,10 +1,15 @@
-extends layout 
-
-block content 
-    div(class="d-flex flex-row" style="justify-content: center; align-items: center;")
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/logsign.css')
+  body
+    div(class="cont")
         img(src="/images/sign-up.jpg" class="rounded")
 
-        div(class="card card-body" style="width: 40rem; margin-left: 30px;")
+        div(class="card")
             form(action="/sign-up" method='POST')
                 div(class="mb-3")
                     label(for="username" class="form-label") Username

@@ -1,0 +1,120 @@
+doctype html
+html
+  head
+    title= title
+    link(rel="stylesheet" href="/stylesheets/posts.css")
+    link(rel='stylesheet' href='/stylesheets/comments.css')
+    link(rel='stylesheet' href='/stylesheets/add-post.css')
+    link(rel='stylesheet' href='/stylesheets/user.css')
+    link(rel="stylesheet", href="/stylesheets/index-responsive.css")
+  body
+        header 
+            div(class='nav-start') 
+                img(class='logo' src='/images/logo.png')
+                div(class="search-cont")
+                    img(class='srch-icon' src='/images/search-icon.svg')
+                    input(type='text' name='users' placeholder='Search Facebook')
+
+            div(class="ul-cont")
+                ul 
+                    li(class='in')
+                        a(href='/')
+                            img(class='home-icon' src='/images/home-icon.png')
+                    li
+                        a(href='/users')
+                            img(class='friends-icon' src='/images/friends-icon.png')
+                    li
+                        img(class="watch-icon" src='/images/watch-icon.png')
+                    li 
+                        img(class="games-icon" src='/images/game-icon.png')
+                div(class="req-cont")
+                    if user.receivedRequests.length > 0
+                        p Friend Requests 
+                        hr
+                        for friend in user.receivedRequests
+                            div   
+                                img(class='user-pic' src=`${friend.pic ? friend.pic : '/images/person.png'}`)
+                                a(href=`/users/${friend._id}`)  
+                                p= friend.username
+                                div(style="flex: 1;")
+                                div
+                                form(action=`/users/${friend._id}/add-friend` method='POST')
+                                    button(type="submit" class="btn") Add Friend 
+                                form(action=`/users/${friend._id}/reject-friend` method='POST')
+                                    button(type="submit" class="btn neg") Reject Request 
+            
+            
+            div(class='nav-end') 
+                div(class="swit" style="display: none;")
+                    div 
+                    div 
+                    div
+                div(class='img-cont')
+                    img(class="messenger-icon" src="/images/messenger-icon.webp")
+                a(href=`/users/${user._id}` class='img-cont user-cont')
+                    img(class="user-pic" src=`${user.pic ? user.pic : '/images/person.png'}`)
+            
+            
+            script.
+                const swit = document.querySelector(".swit");
+                const ulcont = document.querySelector(".ul-cont");
+                swit.addEventListener('click', (e) => {
+                
+                if (ulcont.classList.contains('appear')) {
+                    ulcont.classList.remove('appear');
+                    ulcont.classList.add('disappear');
+                } else {
+                    ulcont.classList.remove('disappear');
+                    ulcont.classList.add('appear');
+                }
+                });
+        div(class="cont") 
+            div(class="header") 
+                div(class='user-cont')
+                    div(class='user-pic pic-big' style=`background-image: url('${person.pic ? person.pic : '/images/person.png'}');`)
+                        if person.username === user.username 
+                            button(id='edit-pic')
+                                img(id='close' src='/images/camera-icon.webp')
+                            
+                            div(class='edit-pic-cont')
+                                form(class='edit-pic-form')
+                                    div(class='edit-pic-form-head')
+                                        h3 Add profile Picture
+                                        button(type='button' id='close-pic')
+                                            img(src='/images/x-icon.svg')
+                                    div(class='edit-pic-form-body')
+                                        div(class='drag-zone-pic')
+                                            div(class='drop-area-pic')
+                                                span Add picture / drag and drop 
+                                            input(name='pic' type="file" id='upload-pic')
+                                        button(class='submit-btn') Save
+
+                            script(src='/javascripts/upload-pic.js')
+                    h1= person.username 
+                    p(style="width: max-content")= `${person.friends.length} friends`
+                div(class='from-cont')
+                    if person._id.toString() !== user._id.toString()
+                        if user.friends.indexOf(person._id) !== -1
+                            form(action=`/users/${person_id}/unfriend` method='POST')
+                                button(class="btn neg" type="submit") Unfriend 
+                        else if user.receivedRequests.indexOf(person._id) !== -1
+                            form(action=`/users/${person._id}/add-friend` method='POST')
+                                button(class="btn" type="submit") Add Friend
+                            form(action=`/users/${person._id}/reject-friend` method='POST')
+                                button(class="btn neg" type="submit") Reject Friend
+                        else if user.sentRequests.indexOf(person._id) !== -1
+                            form(action=`/users/${person._id}/remove-request` method='POST')
+                                button(class="btn neg" type="submit") Remove Request
+                        else 
+                            form(action=`/users/${person._id}/send-request` method='POST')
+                                button(class="btn" type="submit") Send Request
+                    else
+                        form(action=`/log-out` method='POST')
+                            button(class="btn" type="submit") Log out
+                hr
+                div(class='options')
+                    a(href=`/users/${person._id}`) Posts 
+                    a(href=`/users/${person._id}/about`) About
+                    a(href=`/users/${person._id}/friends`) Friends 
+            block content
+        

@@ -1,9 +1,14 @@
-extends layout 
-
-block content
-    div(class="d-flex flex-row" style="justify-content: center; align-items: center;")
-        div(class="card-body card" style="width: 40rem; margin-right: 30px")
-            form(action="/log-in" class="container-fluid needs-validation" method='POST')
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet' href='/stylesheets/index.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/logsign.css')
+  body
+    div(class="cont")
+        div(class="card")
+            form(action="/log-in" method='POST')
                 div(class="mb-3")
                     label(for="username" class="form-label") Username
                     input(name="username" type="text" minlength="3" maxlength="30" class="form-control" id="username" aria-describedby="username" required)

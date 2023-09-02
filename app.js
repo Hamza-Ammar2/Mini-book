@@ -81,9 +81,15 @@ app.post('/log-in', (req, res, next) => {
       req.session.message = info.message;
       return res.redirect('/log-in');
     }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.redirect('/');
+    
+    User.findById(user._id.toString())
+      .populate('receivedRequests')
+      .exec((Err, result) => {
+        if (Err) {return next(Err);}
+        req.logIn(result, function(err) {
+          if (err) { return next(err); }
+          return res.redirect('/');
+        });
     });
   })(req, res, next);
 });

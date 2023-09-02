@@ -1,0 +1,44 @@
+main {
+    width: 800px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    gap: 10px;
+    padding: 10px;
+}
+
+main div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.user-pic {
+    height: 80px;
+    width: 80px;
+    border-radius: 5px;
+}
+
+@media (width <= 1050px) {
+    .header {
+        width: 80vw;
+    }
+    main {
+        width: 80vw !important;
+    }
+}
+
+@media (width <= 600px) {
+    .header {
+        width: 90vw;
+    }
+    main {
+        width: 90vw !important;
+        grid-template-columns: 1fr;
+    }
+}

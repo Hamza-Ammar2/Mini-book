@@ -1,0 +1,53 @@
+.cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.card {
+    width: 40rem; 
+    margin-right: 30px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form hr {
+    width: 100%;
+}
+
+form div {
+    display: flex;
+    width: 100%;
+    gap: 5px;
+    align-items: center;
+}
+
+input {
+    font-size: 1rem;
+    background-color: white;
+}
+
+input:focus {
+    outline: none;
+}
+
+
+@media (width <= 1200px) {
+    img {
+        display: none !important;
+    }
+
+    .cont {
+        width: 90%;
+    }
+}
