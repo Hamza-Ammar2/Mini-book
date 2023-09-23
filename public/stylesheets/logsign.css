@@ -88,6 +88,9 @@ form button {
         flex-direction: column;
         gap: 20px;
     }
+    .left {
+        text-align: center;
+    }
 }
 
 @media (width <= 500px) {
