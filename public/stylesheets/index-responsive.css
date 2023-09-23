@@ -1,4 +1,5 @@
 .appear {
+    display: flex !important;
     transform: translate(0%) !important;
     transition: all 300ms ease-in-out;
 }
@@ -15,12 +16,14 @@
     }
     header {
         padding: 10px;
+        overflow-x: hidden;
     }
     .swit {
         display: flex !important;
     }
 
     .ul-cont {
+        display: none;
         position: absolute;
         top: 0%;
         right: 0%;
@@ -40,6 +43,12 @@
 
     main {
         grid-column: 1 / 4;
+        width: 90vw;
+        justify-self: center;
+    }
+
+    main div {
+        width: 100%;
     }
 }
 

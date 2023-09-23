@@ -2,26 +2,18 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet' href='/stylesheets/index.css')
-    link(rel='stylesheet' href='/stylesheets/style.css')
     link(rel='stylesheet' href='/stylesheets/logsign.css')
+    meta(name="viewport" content="width=device-width, height=device-height")
   body
-    div(class="cont")
-        div(class="card")
-            form(action="/log-in" method='POST')
-                div(class="mb-3")
-                    label(for="username" class="form-label") Username
-                    input(name="username" type="text" minlength="3" maxlength="30" class="form-control" id="username" aria-describedby="username" required)
-                    if message === "Incorrect username"
-                        p(style="color: red;")= message
-
-                div(class="mb-3")
-                    label(for="password" class="form-label") Password 
-                    input(name="password" type="password" minlength="2" maxlength="30" class="form-control" id ="username" aria-describedby="password" required)
-                    if message === "Incorrect password"
-                        p(style="text-color: red;")= message
-
-                button(type="submit" class="btn btn-primary") Submit
-                hr
-                a(href="/sign-up") Don't have an account? Sign up here!
-        img(src="/images/log-in.jpg" class="rounded")
+    div(class="left")
+      h1 facebook 
+      p Connect with friends and the world around you on Facebook.
+    
+    div(class="right")
+      form(action="/log-in" method='POST')
+        input(name="username" type="text" minlength ="3" maxlength="30" placeholder="Name")
+        input(name="password" type="password" placeholder="Password")
+        button(type="submit") Log in
+      hr(style="width: 100%;")
+      a(href="/sign-up")
+        button Create new account 
